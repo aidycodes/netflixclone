@@ -1,0 +1,34 @@
+.left {
+  color: blue;
+  padding: 0.7rem;
+  z-index: 99;
+  height: 434px;
+  min-height: 534px;
+  background: #545454;
+  opacity: 0.1;
+  margin: 0 -22px;
+  transition: all 0.1s ease-in;
+  border-radius: 1px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.left:hover {
+  opacity: 0.5;
+}
+
+.right {
+  padding: 0.7rem;
+  z-index: 99;
+  height: 434px;
+  min-height: 534px;
+  background: #545454;
+  opacity: 0.1;
+  margin: 0 -23px;
+  transition: all 0.1s ease-in;
+  cursor: pointer;
+  border-radius: 1px;
+}
+.right:hover {
+  opacity: 0.5;
+}

@@ -8,6 +8,7 @@ body {
   background-color: var(--black40);
   color: white;
   overflow-x: hidden;
+  overscroll-behavior: none;
 }
 
 ::-webkit-scrollbar {
