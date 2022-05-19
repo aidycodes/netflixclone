@@ -1,0 +1,51 @@
+.large {
+  height: 434px;
+  min-height: 534px;
+  margin: 32px 0px;
+  border-radius: 15px 15px 15px 15px;
+}
+
+.medium {
+  height: 260px;
+  min-height: 280px;
+  margin: 16px -0px;
+  border-radius: 15px 15px 15px 15px;
+}
+
+.small {
+  height: 170px;
+  min-height: 170px;
+  margin: 8px -0px;
+  border-radius: 15px 15px 15px 15px;
+}
+
+.left {
+  color: blue;
+  padding: 0.7rem;
+  z-index: 99;
+  margin-right: -20px;
+  background: #545454;
+  opacity: 0.1;
+  border-radius: 15px 15px 15px 15px;
+  transition: all 0.1s ease-in;
+
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.left:hover {
+  opacity: 0.5;
+}
+
+.right {
+  padding: 0.7rem;
+  z-index: 99;
+  background: #545454;
+  opacity: 0.1;
+  margin-left: -22.5px;
+  transition: all 0.1s ease-in;
+  cursor: pointer;
+}
+.right:hover {
+  opacity: 0.5;
+}

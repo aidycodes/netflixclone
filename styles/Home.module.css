@@ -1,3 +1,8 @@
-/* .container {
-  padding: 0 2rem;
-} */
+.sectionWrapper {
+  margin-top: 1.5rem;
+  margin-left: 2rem;
+}
+
+.main {
+  padding-bottom: 4rem;
+}

@@ -1,8 +1,9 @@
 import React, { useState, useRef, useContext } from 'react'
 import styles from './Arrow.module.css'
+import cls from 'classnames'
 
 const Arrow = (props) => {
-  const { onClick, type, disabled, VisibilityContext } = props
+  const { onClick, type, disabled, VisibilityContext, size } = props
   
   const  { scrollToItem, getPrevItem, getNextItem } = useContext(VisibilityContext);
 
@@ -39,18 +40,14 @@ const Arrow = (props) => {
         
   
     const toggleOffHover = () => {
+      console.log(size)
         setHover(!hover)
         clearInterval(scrollInterval.current)
         
   }
-
-
-  
-
   return (
-      <>
-     
-    <div style={inlineStyle(hover)} onMouseEnter={() => toggleOnHover()} onMouseLeave={() => toggleOffHover()} className={styles[type]} onClick={() => onClick()}></div>
+      <>  
+    <div style={inlineStyle(hover)} onMouseEnter={() => toggleOnHover()} onMouseLeave={() => toggleOffHover()} className={cls(styles[type], styles[size])} onClick={() => onClick()}></div>
       
       </>
   )

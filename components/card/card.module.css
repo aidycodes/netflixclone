@@ -8,6 +8,7 @@
 }
 
 .smItem {
+  margin: 0.5rem 0rem;
   position: relative;
   width: 300px;
   min-width: 300px;
@@ -16,6 +17,7 @@
 }
 
 .mdItem {
+  margin: 1rem 0rem;
   position: relative;
   width: 158px;
   min-width: 158px;
@@ -24,6 +26,7 @@
 }
 
 .lgItem {
+  margin: 2rem 0rem;
   position: relative;
   width: 218px;
   min-width: 218px;
