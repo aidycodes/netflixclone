@@ -65,6 +65,7 @@
   align-items: center;
   overflow: hidden;
   color: var(--white);
+  padding: 0.5rem;
 }
 
 .username {
@@ -82,7 +83,7 @@
   border-width: 1px;
   color: var(--white);
   border-radius: 0.25rem /* 4px */;
-
+  top: 50px;
   border-color: var(--blue);
 
   box-shadow: var(--shadow30, 0 0 #0000), var(--ring-shadow, 0 0 #0000),

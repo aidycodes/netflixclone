@@ -48,14 +48,14 @@ const Navbar = (props) => {
         <li className={styles.navItem2} onClick={handleOnClickMyList}>My List</li>
     </ul>
 
-    <nav className={styles.navContainer}>
-        <div  onMouseOver={handleShowDropdownHoverOn} onMouseLeave={handleShowDropdownHoverOff}>
-            <button className={styles.usernameBtn} onClick={handleShowDropdown}>
+    <nav className={styles.navContainer} >
+        <div  >
+            <button className={styles.usernameBtn} onClick={handleShowDropdown} onMouseOver={handleShowDropdownHoverOn} onMouseLeave={handleShowDropdownHoverOff}>
                 <p className={styles.username}>{userName}</p>
                <Image src='/images/expand_more.svg' alt="expand dropdown" width="24px" height="24px"/> 
             </button>
             { showDropdown && 
-            <div className={styles.navDropdown}>
+            <div className={styles.navDropdown} onMouseOver={handleShowDropdownHoverOn} onMouseLeave={handleShowDropdownHoverOff}    >
                 <Link href="/login">
                     <a className={styles.linkName}>Sign out</a>
                 </Link>
