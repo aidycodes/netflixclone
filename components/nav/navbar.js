@@ -1,16 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from './navbar.module.css'
 import  { useRouter } from 'next/router'
 import Link from 'next/link' 
 import Image from 'next/image'
+import { magic } from '../../lib/magicClient'
+
 
 const Navbar = (props) => {
-
-    const { userName } = props
 
     const router = useRouter()
 
     const [ showDropdown, setShowDropdown ] = useState(false)
+    const [email, setEmail ] = useState('')
 
     const handleOnClickHome = (e) => {
         e.preventDefault()
@@ -33,6 +34,31 @@ const Navbar = (props) => {
     }
 
 
+    const loginInfo = async() => {
+        try {
+         const { email } = await magic.user.getMetadata();
+         setEmail(email)
+    } catch(err) {
+  console.log('login info error',err)
+    }
+}
+
+    const handleLogout = async(e) => {
+        e.preventDefault()
+        try {
+        await magic.user.logout();
+            setEmail('')
+            router.push('/login')    
+    } catch(err) {
+    console.log('logout error',err)
+    router.push('/login')   
+    }
+    }
+
+    useEffect(() => {
+      loginInfo()
+    },[])
+
   return (
     <div className={styles.container}>
         <div className={styles.wrapper}>
@@ -51,13 +77,13 @@ const Navbar = (props) => {
     <nav className={styles.navContainer} >
         <div  >
             <button className={styles.usernameBtn} onClick={handleShowDropdown} onMouseOver={handleShowDropdownHoverOn} onMouseLeave={handleShowDropdownHoverOff}>
-                <p className={styles.username}>{userName}</p>
+                <p className={styles.username}>{email}</p>
                <Image src='/images/expand_more.svg' alt="expand dropdown" width="24px" height="24px"/> 
             </button>
             { showDropdown && 
             <div className={styles.navDropdown} onMouseOver={handleShowDropdownHoverOn} onMouseLeave={handleShowDropdownHoverOff}    >
-                <Link href="/login">
-                    <a className={styles.linkName}>Sign out</a>
+                <Link href="/login" >
+                    <a className={styles.linkName} onClick={handleLogout}   >Sign out</a>
                 </Link>
             </div>
             }

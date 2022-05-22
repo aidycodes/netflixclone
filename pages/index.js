@@ -26,7 +26,7 @@ export default function Home({ youtubeVideos, travelVideos, productivityVideos, 
       </Head> 
  <div className={styles.main}>        
       <Navbar userName="{userName}"/>
-      <Banner title='Clifford the red dog' subTitle='very cute dog' imgUrl="images/clifford.webp"/>
+      <Banner title='Clifford the red dog' subTitle='very cute dog' imgUrl="images/clifford.webp" videoId="4zH5iYM4wJo"/>
     <div className={styles.sectionWrapper}>
        <SectionCards title="Disney" size="large" videos={youtubeVideos}/>
     </div>

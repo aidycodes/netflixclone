@@ -1,25 +1,35 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/login.module.css'
 import  { isValidEmail } from '../lib/isValidEmail'
 import { useRouter } from 'next/router'
+import { magic } from '../lib/magicClient'
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Login = () => {
 
     const [userMsg, setUserMsg] = useState("")
     const [valid, setValid] = useState(false)
     const [email, setEmail] = useState("")
+    const [isLoading, setIsLoading] = useState(false)
 
     const router = useRouter()
 
-    const handleLoginWithEmail = (e) => {
+    const handleLoginWithEmail = async(e) => {
         e.preventDefault()
         const isValid = isValidEmail(email);
         if(isValid){
             if(email === 'aidycodes@gmail.com'){
-                console.log('signing in')
-                router.push('/')
+              setIsLoading(true)
+               try {
+                const didToken = await magic.auth.loginWithMagicLink({ email });
+                 if(didToken){
+                     router.push('/')
+                 }
+                } catch(err) {
+                console.log("something went wrong loggin in", err)
+                } 
             } else {
                      setUserMsg("Something Went Wrong...")
             }
@@ -34,6 +44,20 @@ const Login = () => {
          setEmail(e.target.value)
 
     }
+
+    useEffect(() => {
+        const handleComplete = () => {
+            setIsLoading(false)
+        }
+      router.events.on('routeChangeComplete', handleComplete)
+      router.events.on('routeChangeError', handleComplete)
+    
+      return () => {
+        router.events.off('routeChangeComplete')
+         router.events.off('routeChangeError')
+      }
+    }, [router])
+    
 
   return (
     <div className={styles.container}>
@@ -54,7 +78,7 @@ const Login = () => {
                 <h1 className={styles.signinHeader}>Sign In</h1>
                 <input className={styles.emailInput} type="text" placeholder='email address' onChange={handleOnChangeEmail}/>
                 <p className={styles.userMsg}>{userMsg}</p>
-                <button className={styles.loginBtn} onClick={handleLoginWithEmail}>Sign In</button>
+                <button className={styles.loginBtn} onClick={handleLoginWithEmail}>{isLoading ? <CircularProgress size={20}/> : "Sign In"}</button>
              </div>
         </main>
     </div>

@@ -6,7 +6,7 @@ import cls from 'classnames'
 
 const Card = (props) => {
 
-    const {imgUrl = "/images/cliffor.webp", size = "medium", itemId} = props
+    const {imgUrl = "/images/cliffor.webp", size = "medium", itemId } = props
 
     const [ imgSrc, setImgSrc ] = useState(imgUrl)
 
