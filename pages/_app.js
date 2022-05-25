@@ -21,7 +21,10 @@ function MyApp({ Component, pageProps }) {
 
       useEffect(() => {
         const handleComplete = () => {
+          setTimeout(() => {
             setIsLoading(false)
+          }, 100);
+            
         }
       router.events.on('routeChangeComplete', handleComplete)
       router.events.on('routeChangeError', handleComplete)

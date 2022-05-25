@@ -37,6 +37,7 @@ const Navbar = (props) => {
     const loginInfo = async() => {
         try {
          const { email } = await magic.user.getMetadata();
+        const didToken = await magic.user.getIdToken()
          setEmail(email)
     } catch(err) {
   console.log('login info error',err)

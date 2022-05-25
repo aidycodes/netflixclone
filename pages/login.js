@@ -10,7 +10,6 @@ import CircularProgress from '@mui/material/CircularProgress';
 const Login = () => {
 
     const [userMsg, setUserMsg] = useState("")
-    const [valid, setValid] = useState(false)
     const [email, setEmail] = useState("")
     const [isLoading, setIsLoading] = useState(false)
 
@@ -20,19 +19,30 @@ const Login = () => {
         e.preventDefault()
         const isValid = isValidEmail(email);
         if(isValid){
-            if(email === 'aidycodes@gmail.com'){
               setIsLoading(true)
                try {
                 const didToken = await magic.auth.loginWithMagicLink({ email });
                  if(didToken){
-                     router.push('/')
+                     const response = await fetch('/api/login', {
+                         method:'POST',
+                         headers:{
+                             'Authorization':`Bearer ${didToken}`,
+                             'Content-Type': "application/json"
+                         }
+                     })
+                     const loggedInResponse = await response.json()
+                     if(loggedInResponse.done){
+                         router.push('/')
+                     } else {
+                         setIsLoading(false)
+                         setUserMsg('Something went Wrong...')
+                     }
+                    
                  }
                 } catch(err) {
                 console.log("something went wrong loggin in", err)
                 } 
-            } else {
-                     setUserMsg("Something Went Wrong...")
-            }
+ 
         } else {
             setUserMsg("Please enter a valid email address")
         }
