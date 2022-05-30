@@ -11,28 +11,23 @@ export const getServerSideProps = async(context) => {
 
  const {userId, token} = await useRedirectUser(context)
 
-  //  if(!userId){
-  //   return{
-  //     props:{},
-  //     redirect:{
-  //       destination:'/login',
-  //       permanent:false
-  //     }
-  //   }
-  // }
-
     const watchItAgainVideos = await getWatchItAgainVideos(userId, token)
     const youtubeVideos = await getVideos('Disney Trailers')
     const productivityVideos = await getVideos('Productivity')
     const travelVideos = await getVideos('Travel')
     const popularVideos = await getPopularVideos()
 
+     const i = Math.floor(Math.random()*25)
+     const bannerData = popularVideos[i]
+
     return {
-      props:{youtubeVideos, travelVideos, productivityVideos, popularVideos, watchItAgainVideos}
+      props:{youtubeVideos, travelVideos, productivityVideos, popularVideos, watchItAgainVideos, bannerData}
     }
 }
 
-export default function Home({ youtubeVideos, travelVideos, productivityVideos, popularVideos, watchItAgainVideos }) {
+export default function Home({ youtubeVideos, travelVideos, productivityVideos, popularVideos, watchItAgainVideos, bannerData }) {
+
+ const {title, imgUrl, description} = bannerData
 
   return (
     <div className={styles.container}>
@@ -43,13 +38,15 @@ export default function Home({ youtubeVideos, travelVideos, productivityVideos, 
       </Head> 
  <div className={styles.main}>        
       <Navbar userName="{userName}"/>
-      <Banner title='Clifford the red dog' subTitle='very cute dog' imgUrl="images/clifford.webp" videoId="4zH5iYM4wJo"/>
+      <Banner title={title} subTitle={'`' ||description} imgUrl={imgUrl} videoId="4zH5iYM4wJo"/>
     <div className={styles.sectionWrapper}>
        <SectionCards title="Disney" size="large" videos={youtubeVideos}/>
     </div>
+    {watchItAgainVideos.length > 0 &&
      <div className={styles.sectionWrapper}>
        <SectionCards title="Watch It Again" size="small" videos={watchItAgainVideos}/>
     </div> 
+    }
       <div className={styles.sectionWrapper}>
        <SectionCards title="Travel" size="small" videos={travelVideos}/>
     </div>

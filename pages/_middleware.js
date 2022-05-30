@@ -1,15 +1,16 @@
 import { NextResponse } from 'next/server'
-import { verifyToken } from '../lib/utils'
+import { verifyAuth } from '../lib/verifyToken4Middleware'
 
 export async function middleware(req, ev) {
     const token = req ? req.cookies?.token : null
-    const userId = await verifyToken(token)
-    const url = 'http://localhost:3000' //req.nextUrl.clone()
+    const userId = await verifyAuth(token)
+    
+    const {pathname, origin} = req.nextUrl.clone()    
         
-    if(token && userId || url.includes("/login") || url.includes('static') ){
+    if(token && userId || pathname.includes(`/api/login`) || pathname.includes('/images') ){
         return NextResponse.next()
     }
-    if(!token && url !== '/login' ){
-        return NextResponse.next()   //.redirect(url)
+    if(!token && pathname !== '/login' ){
+        return NextResponse.redirect(`${origin}/login`, 302)
     }
 }
