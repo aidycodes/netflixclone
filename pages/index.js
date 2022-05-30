@@ -19,6 +19,7 @@ export const getServerSideProps = async(context) => {
 
      const i = Math.floor(Math.random()*25)
      const bannerData = popularVideos[i]
+     console.log(bannerData)
 
     return {
       props:{youtubeVideos, travelVideos, productivityVideos, popularVideos, watchItAgainVideos, bannerData}
@@ -27,7 +28,7 @@ export const getServerSideProps = async(context) => {
 
 export default function Home({ youtubeVideos, travelVideos, productivityVideos, popularVideos, watchItAgainVideos, bannerData }) {
 
- const {title, imgUrl, description} = bannerData
+ const{title, imgUrl, description} = bannerData
 
   return (
     <div className={styles.container}>
@@ -38,7 +39,7 @@ export default function Home({ youtubeVideos, travelVideos, productivityVideos, 
       </Head> 
  <div className={styles.main}>        
       <Navbar userName="{userName}"/>
-      <Banner title={title} subTitle={'`' ||description} imgUrl={imgUrl} videoId="4zH5iYM4wJo"/>
+      <Banner title={'Clifford the red dog'} subTitle='very cute dog' imgUrl="images/clifford.webp" videoId="4zH5iYM4wJo"/>
     <div className={styles.sectionWrapper}>
        <SectionCards title="Disney" size="large" videos={youtubeVideos}/>
     </div>
