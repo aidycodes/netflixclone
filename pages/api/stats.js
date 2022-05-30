@@ -1,21 +1,21 @@
-import jwt from 'jsonwebtoken'
-import { findVideoIdByUser, insertStats } from '../../lib/db/hasura'
-import { updateStats } from '../../lib/db/hasura'
+import { findVideoIdByUser, insertStats, updateStats } from '../../lib/db/hasura'
+import { verifyToken } from '../../lib/utils'
 
 const stats = async(req,res) => {
-if(req.method === "POST"){
     try{
         const token = req.cookies?.token
         if(!token){
              res.status(403).send({})
     }else{
-        const { videoId, favourited, watched = true} = req.body
-        if(videoId){
-        const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
-        const userId = decodedToken.issuer
+        const inputId = req.method === "POST" ? req.body : req.query
+        const { videoId } = inputId       
+        if(videoId){        
+        const userId = await verifyToken(token)
         const findVideo = await findVideoIdByUser(userId, videoId, token)
             const doesStatsExist = findVideo.length > 0
-            if(doesStatsExist){
+            if(req.method === "POST"){
+                const { favourited, watched = true} = req.body
+                if(doesStatsExist){
                 //update
                 const response = await updateStats(token, {
                     favourited,
@@ -32,42 +32,22 @@ if(req.method === "POST"){
                     videoId})
                  res.status(200).send({data:response})
             }
-         } else {
-             res.status(500).send({msg:"no videoId was sent"})
-         }
-        }
-    } catch(err){
-        console.log(err, '/stats')
-        res.status(500).send({done:false, error:err?.message })
-    }
-} else { 
-    try{
-        const token = req.cookies?.token
-        if(!token){
-             res.status(403).send({})
-    }else{
-        const { videoId } = req.body
-        if(videoId){
-        const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
-        const userId = decodedToken.issuer
-        const findVideo = await findVideoIdByUser(userId, videoId, token)
-           const doesStatsExist = findVideo?.length > 0
-            if(doesStatsExist){
+            }else{
+                if(doesStatsExist){
                 //return data
                 res.send({findVideo})  
             } else{
                 //return dummy data
                 res.send({msg:"no video found","favourited": null})
             }
-         } else {
-             res.status(500).send({msg:"no videoId was sent"})
-         }
-        }
-    } catch(err){
+           }
+        } 
+    } 
+
+    }catch(err){
         console.log(err, '/stats')
         res.status(500).send({done:false, error:err?.message })
     }
+}
 
-}
-}
  export default stats

@@ -55,7 +55,6 @@ const Video = ({ video }) => {
           "Content-Type":"application/json"
         }
       })
-      console.log(response)
       return response  
   }
 
@@ -86,7 +85,6 @@ const Video = ({ video }) => {
   const showLikeDislike = () => {
     setShow(true)
     setTimer(new Date() / 1000)
-
   }
 
   useEffect(() =>{   
@@ -97,6 +95,46 @@ const Video = ({ video }) => {
       }
     }, 1000);
   },[timer])
+
+  useEffect(() => {
+    const setWatched = async() => {
+      const response = await fetch('/api/setWatched', {
+        method:"POST",
+        body:JSON.stringify({
+          videoId:videoid
+        }),
+        headers:{
+          "Content-Type":"application/json"
+        },
+      })
+    }
+    setWatched()
+  },[])
+
+  useEffect(() => {
+      const getLikeDislikeStats = async() => {
+      const response = await fetch(`/api/stats?videoId=${videoid}`, {
+        method:"GET",
+        headers:{
+          "Content-Type":"application/json"
+        },
+      })
+     const data = await response.json()
+      if(data?.findVideo?.length > 0){
+        if(data.findVideo[0].favourited === 1){
+          setLike(true)
+          setDislike(false)
+        } else if(data.findVideo[0].favourited === 0){
+          setLike(false)
+          setDislike(true)
+        } else{
+          setLike(false)
+          setDislike(false)
+        }
+      }
+    }
+   getLikeDislikeStats()
+  },[])
 
   return (
     <div styles={styles.container}>
@@ -112,11 +150,7 @@ const Video = ({ video }) => {
           <iframe onMouseMove={showLikeDislike} id="ytplayer" className={styles.videoPlayer} type="text/html" width="100%" height="360"
   src={`https://www.youtube.com/embed/${videoid}?autoplay=0&origin=http://example.com&controls=0&rel=0`}
   frameBorder="0">
-   
-
   </iframe>
-  
-
       <div className={clsx(styles.likeDislikeBtnWrapper, show ? styles.showHover : styles.hideHover)}>
       <div className={styles.likeBtnWrapper}>
         <button onClick={handleToggleLike}>

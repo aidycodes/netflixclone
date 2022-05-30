@@ -18,8 +18,8 @@ const SectionCards = (props) => {
         <div className={styles.slideFix}>
           <ScrollMenu className={styles.cardWrapper} onWheel={(context, event) => onWheel(context, event)}  LeftArrow={() => LeftArrow(size)} RightArrow={() => RightArrow(size)}>
                 {videos?.map((video, i) => (
-                    <Link key={video.id} href={`/video/${video.id}`} itemId={i}>
-                      <a>  <Card imgUrl={video.imgUrl} size={size}  itemId={video.id}/>  </a>
+                    <Link key={video.id} href={`/video/${video.id}`} itemId={title + video.id}>
+                      <a>  <Card imgUrl={video.imgUrl} size={size} />  </a>
                     </Link>    
                 ))}                          
          </ScrollMenu>

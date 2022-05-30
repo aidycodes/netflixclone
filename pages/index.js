@@ -4,18 +4,35 @@ import SectionCards from '../components/card/sectionCards'
 import Navbar from '../components/nav/navbar'
 import styles from '../styles/Home.module.css'
 import { getVideos, getPopularVideos } from '../lib/videos'
+import { getWatchItAgainVideos } from '../lib/videos'
+import useRedirectUser from '../lib/useRedirectUser'
 
-export const getServerSideProps = async() => {
+export const getServerSideProps = async(context) => {
+
+ const {userId, token} = await useRedirectUser(context)
+
+  //  if(!userId){
+  //   return{
+  //     props:{},
+  //     redirect:{
+  //       destination:'/login',
+  //       permanent:false
+  //     }
+  //   }
+  // }
+
+    const watchItAgainVideos = await getWatchItAgainVideos(userId, token)
     const youtubeVideos = await getVideos('Disney Trailers')
     const productivityVideos = await getVideos('Productivity')
     const travelVideos = await getVideos('Travel')
     const popularVideos = await getPopularVideos()
+
     return {
-      props:{youtubeVideos, travelVideos, productivityVideos, popularVideos}
+      props:{youtubeVideos, travelVideos, productivityVideos, popularVideos, watchItAgainVideos}
     }
 }
 
-export default function Home({ youtubeVideos, travelVideos, productivityVideos, popularVideos }) {
+export default function Home({ youtubeVideos, travelVideos, productivityVideos, popularVideos, watchItAgainVideos }) {
 
   return (
     <div className={styles.container}>
@@ -30,6 +47,9 @@ export default function Home({ youtubeVideos, travelVideos, productivityVideos, 
     <div className={styles.sectionWrapper}>
        <SectionCards title="Disney" size="large" videos={youtubeVideos}/>
     </div>
+     <div className={styles.sectionWrapper}>
+       <SectionCards title="Watch It Again" size="small" videos={watchItAgainVideos}/>
+    </div> 
       <div className={styles.sectionWrapper}>
        <SectionCards title="Travel" size="small" videos={travelVideos}/>
     </div>

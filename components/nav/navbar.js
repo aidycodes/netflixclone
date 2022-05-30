@@ -44,17 +44,27 @@ const Navbar = (props) => {
     }
 }
 
-    const handleLogout = async(e) => {
-        e.preventDefault()
-        try {
-        await magic.user.logout();
-            setEmail('')
-            router.push('/login')    
-    } catch(err) {
-    console.log('logout error',err)
-    router.push('/login')   
+const handleLogout = async (e) => {
+    e.preventDefault();
+    console.log('hi')
+    try {
+      const response = await fetch("/api/logout", {
+        method: 'GET',
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const res = await response.json();
+      console.log(res.msg)
+      if(res.msg === 'success' ){
+           router.push("/login");
+      }
+    } catch (error) {
+      console.error("Error logging out", error);
+      router.push("/login");
     }
-    }
+  };
 
     useEffect(() => {
       loginInfo()
