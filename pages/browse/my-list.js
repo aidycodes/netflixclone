@@ -21,7 +21,7 @@ export const getServerSideProps = async(context) => {
 }
 
 const Favourites = ({ favVideos}) => {
-    console.log(favVideos)
+   
     const favouriteCards = favVideos.map(video => (
          <Link key={video.id} href={`/video/${video.id}`} >
         <a><Card size="small" id={video.id} imgUrl={video.imgUrl} shouldScale={false}/></a>

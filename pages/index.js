@@ -19,7 +19,7 @@ export const getServerSideProps = async(context) => {
 
      const i = Math.floor(Math.random()*25)
      const bannerData = popularVideos[i]
-     console.log(bannerData)
+    
 
     return {
       props:{youtubeVideos, travelVideos, productivityVideos, popularVideos, watchItAgainVideos, bannerData}

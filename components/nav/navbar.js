@@ -46,7 +46,7 @@ const Navbar = (props) => {
 
 const handleLogout = async (e) => {
     e.preventDefault();
-    console.log('hi')
+    
     try {
       const response = await fetch("/api/logout", {
         method: 'GET',
@@ -56,7 +56,7 @@ const handleLogout = async (e) => {
       });
 
       const res = await response.json();
-      console.log(res.msg)
+      
       if(res.msg === 'success' ){
            router.push("/login");
       }

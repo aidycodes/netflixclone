@@ -40,7 +40,7 @@ const Arrow = (props) => {
         
   
     const toggleOffHover = () => {
-      console.log(size)
+     
         setHover(!hover)
         clearInterval(scrollInterval.current)
         
