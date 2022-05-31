@@ -71,9 +71,11 @@ const Login = () => {
 
   return (
     <div className={styles.container}>
-     <Head>
-        <title>Netflix Sign In</title>        
-    </Head>
+    <Head>
+        <title>Netflix Login</title>
+        <meta name="description" content="Video on demand" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head> 
         <header className={styles.header}>
             <div className={styles.headerWrapper}>
             <a className={styles.logoLink} href="/">
