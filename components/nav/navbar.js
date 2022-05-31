@@ -74,8 +74,8 @@ const handleLogout = async (e) => {
     <div className={styles.container}>
         <div className={styles.wrapper}>
         <a className={styles.logoLink} href="/">
-             <div className={styles.logoWrapper}>
-          <Image src='/images/netflix.svg' alt="netflix logo" width="128px" height="34px"/> 
+             <div className={styles.logoWrapper} width="128px" height="34px">
+          <Image src='/images/netflix.svg' alt="netflix logo" layout="fill"/> 
             </div>
         </a>
   
